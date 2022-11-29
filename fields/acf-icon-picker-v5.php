@@ -51,7 +51,7 @@ class acf_field_icon_picker extends acf_field {
 	}
 
 	public function render_field_settings($field) {
-		// default_value
+		// return format
 		acf_render_field_setting(
 			$field, [
 				'label'        => __( 'Return Format', 'acf-icon-picker' ),
