@@ -40,8 +40,8 @@
       jQuery('body').append(
         `<div class="acf-icon-picker__popup-holder">
         <div class="acf-icon-picker__popup">
-        <a class="acf-icon-picker__popup__close" href="javascript:">close</a>
-        <h4 class="acf-icon-picker__popup__title">ACF Icon Picker - Choose icon</h4>
+        <a class="acf-icon-picker__popup__close" href="javascript:">Close</a>
+        <h4 class="acf-icon-picker__popup__title">Choose the icon</h4>
         <input class="acf-icon-picker__filter" type="text" id="filterIcons" placeholder="Start typing to filter icons" />
           ${list}
         </div>
