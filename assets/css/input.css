@@ -142,3 +142,7 @@
 	border-radius: 4px;
 	width: 100%;
 }
+
+.acf-icon-picker__popup #icons-list {
+	padding-top: 10px;
+}
