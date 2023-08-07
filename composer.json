@@ -1,11 +1,7 @@
 {
-  "name": "houke/acf-icon-picker",
-  "description": "Add ACF field for selecting SVG icons.",
-  "minimum-stability": "stable",
-  "authors": [
-    {
-      "name": "houke"
-    }
-  ],
-  "type": "wordpress-plugin"
+    "name": "timezhero/acf-icon-picker",
+    "description": "Add ACF field for selecting SVG icons. Forked from houke/acf-icon-picker.",
+    "version": "1.0.0",
+    "minimum-stability": "stable",
+    "type": "wordpress-plugin"
 }

@@ -6,52 +6,77 @@ if( !class_exists('acf_field_icon_picker') ) :
 
 class acf_field_icon_picker extends acf_field {
 
-	function __construct( $settings ) {
+	public static $pluginSettings = [];
 
-		$this->name = 'icon-picker';
+	public function initialize() {
+		// vars
+		$this->name     	= 'icon-picker';
+		$this->label    	= __('Icon Picker', 'acf-icon-picker');
+		$this->category 	= 'jquery';
+		$this->l10n 		= ['error'	=> __('Error!', 'acf-icon-picker')];
+		$this->settings 	= static::$pluginSettings;
+		$this->path_suffix 	= apply_filters('acf_icon_path_suffix', 'assets/img/acf/');
+		$this->path 		= apply_filters('acf_icon_path', $this->settings['path']).$this->path_suffix;
+		$this->url 			= apply_filters('acf_icon_url', $this->settings['url']).$this->path_suffix;
 
-		$this->label = __('Icon Picker', 'acf-icon-picker');
+		$this->defaults = [
+			'default_value' => '',
+			'initial_value' => '',
+			'maxlength'     => '',
+			'placeholder'   => '',
+			'prepend'       => '',
+			'append'        => '',
+		];
 
-		$this->category = 'jquery';
+		$priority_dir_lookup = get_stylesheet_directory().'/'.$this->path_suffix;
 
-		$this->defaults = array(
-			'initial_value'	=> '',
-		);
-
-		$this->l10n = array(
-			'error'	=> __('Error!', 'acf-icon-picker'),
-		);
-
-		$this->settings = $settings;
-
-		$this->path_suffix = apply_filters( 'acf_icon_path_suffix', 'assets/img/acf/' );
-
-		$this->path = apply_filters( 'acf_icon_path', $this->settings['path'] ) . $this->path_suffix;
-
-		$this->url = apply_filters( 'acf_icon_url', $this->settings['url'] ) . $this->path_suffix;
-
-		$priority_dir_lookup = get_stylesheet_directory() . '/' . $this->path_suffix;
-
-		if ( file_exists( $priority_dir_lookup ) ) {
+		if (file_exists($priority_dir_lookup)) {
 			$this->path = $priority_dir_lookup;
-			$this->url = get_stylesheet_directory_uri() . '/' . $this->path_suffix;
+			$this->url = get_stylesheet_directory_uri().'/'.$this->path_suffix;
 		}
+		
+		$this->svgs = [];
 
-		$this->svgs = array();
-
-		$files = array_diff(scandir($this->path), array('.', '..'));
+		$files = array_diff(scandir($this->path), ['.', '..']);
 		foreach ($files as $file) {
-			if( pathinfo($file, PATHINFO_EXTENSION) == 'svg' ){
+			if(pathinfo($file, PATHINFO_EXTENSION) == 'svg') {
 				$exploded = explode('.', $file);
-				$icon = array(
+				$icon = [
 					'name' => $exploded[0],
 					'icon' => $file
-				);
+				];
 				array_push($this->svgs, $icon);
 			}
 		}
+	}
 
-    	parent::__construct();
+	public function render_field_settings($field) {
+		// return format
+		acf_render_field_setting(
+			$field, [
+				'label'        => __( 'Return Format', 'acf-icon-picker' ),
+				'instructions' => '',
+				'type'         => 'radio',
+				'name'         => 'return_format',
+				'layout'       => 'horizontal',
+				'choices'      => [
+					'name' => __( 'SVG Name', 'acf-icon-picker' ),
+					'url'  => __( 'SVG URL', 'acf-icon-picker' ),
+				],
+			]
+		);
+	}
+
+	public function format_value($value, $post_id, $field) {
+		if (empty($value)) {
+			return false;
+		}
+
+		if ( $field['return_format'] == 'url' ) {
+			return "{$this->url}{$value}.svg";
+		}
+
+		return $value;
 	}
 
 	function render_field( $field ) {
@@ -101,8 +126,8 @@ class acf_field_icon_picker extends acf_field {
 		wp_enqueue_style('acf-input-icon-picker');
 	}
 }
-new acf_field_icon_picker( $this->settings );
+
+acf_field_icon_picker::$pluginSettings = $this->settings;
+acf_register_field_type('acf_field_icon_picker');
 
 endif;
-
-?>

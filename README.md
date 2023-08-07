@@ -26,8 +26,8 @@ This ACF field type is compatible with:
 ## Installation
 
 ### via Composer
-1. Add a line to your repositories array: `{ "type": "git", "url": "https://github.com/houke/acf-icon-picker" }`
-2. Add a line to your require block: `"houke/acf-icon-picker": "dev-master"`
+1. Add a line to your repositories array: `{ "type": "github", "url": "https://github.com/TimeZHero/acf-icon-picker" }`
+2. Add a line to your require block: `"timezhero/acf-icon-picker"`
 3. Run: composer update
 
 ### Manually
@@ -88,6 +88,10 @@ add_filter('acf_icon_url',
 ```
 
 ## Changelog
+
+* 1.0.0 - Adapted for Rest API, added return formats.
+
+## Changelog from the plugin root
 
 * 1.9.1 - ACF 6 compatibility fix. Thanks to [idflood](https://github.com/houke/acf-icon-picker/pull/30)
 * 1.9.0 - Fix issue with Gutenberg preview not updating when removing. Thanks to [cherbst](https://github.com/houke/acf-icon-picker/pull/23)
